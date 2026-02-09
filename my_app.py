@@ -14,9 +14,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 import seaborn as sns
 
-data = pd.read_csv('open_meteo.csv')
+data = pd.read_csv('/open_meteo.csv', sep=',', engine = 'python')
 
-data.head()
+from google.colab import drive
+drive.mount('/content/drive')
+
+data.tail()
 
 data.info()
 
@@ -46,4 +49,8 @@ fig = px.density_heatmap(
     title='Температура: час × локація'
 )
 
+fig.show()
+
+fig = px.scatter(data, x = 'time', y = 'temperature_2m (°C)', color='location_id', opacity=0.3)
+fig.update_layout(xaxis_title= 'Час доби', yaxis_title='Температура')
 fig.show()
